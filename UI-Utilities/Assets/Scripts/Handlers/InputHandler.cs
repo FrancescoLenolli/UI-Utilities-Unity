@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public delegate void OnChangeDevice(DeviceKey.Device device);
@@ -8,6 +9,7 @@ public class InputHandler : Singleton<InputHandler>
 {
     public DeviceKey.Device currentController;
     public InputDevice currentDevice;
+    [HideInInspector] public Vector2 mousePosition;
     [HideInInspector] public List<DeviceKey> listKeys;
 
     public event OnChangeDevice OnChangeDevice;
@@ -45,22 +47,22 @@ public class InputHandler : Singleton<InputHandler>
                 switch (device.name)
                 {
                     case "XInputControllerWindows":
-                        Debug.Log($"Current Device is {device.name}");
+                        //Debug.Log($"Current Device is {device.name}");
                         ChangeActiveController(DeviceKey.Device.XBOX, device);
                         break;
 
                     case "DualShock4GamepadHID":
-                        Debug.Log($"Current Device is {device.name}");
+                        //Debug.Log($"Current Device is {device.name}");
                         ChangeActiveController(DeviceKey.Device.PS4, device);
                         break;
 
                     case "Keyboard":
-                        Debug.Log($"Current Device is {device.name}");
+                        //Debug.Log($"Current Device is {device.name}");
                         ChangeActiveController(DeviceKey.Device.PC, device);
                         break;
 
                     case "Mouse":
-                        Debug.Log($"Current Device is {device.name}");
+                        //Debug.Log($"Current Device is {device.name}");
                         ChangeActiveController(DeviceKey.Device.PC, device);
                         break;
                 }
@@ -87,5 +89,10 @@ public class InputHandler : Singleton<InputHandler>
             if (key == k.key) return k.sprites[(int)device];
         }
         return null;
+    }
+
+    public void OnMousePosition(InputValue value)
+    {
+        mousePosition = value.Get<Vector2>();
     }
 }
