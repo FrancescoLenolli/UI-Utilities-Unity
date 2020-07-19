@@ -34,38 +34,41 @@ public class InputHandler : Singleton<InputHandler>
     {
         InputSystem.onActionChange += ChangeCurrentDevice;
     }
+
+    private void Update()
+    {
+        mousePosition = Mouse.current.position.ReadValue();
+    }
+
     private void ChangeCurrentDevice(object obj, InputActionChange actionChange)
     {
         if (actionChange == InputActionChange.ActionPerformed)
         {
             InputAction inputAction = (InputAction)obj;
-            InputDevice device = inputAction.activeControl.device;
+            InputDevice newDevice = inputAction.activeControl.device;
 
-            //Check to avoid sending the same message too many times.
-            if (device != currentDevice)
+            // Check if the new Device detected is different from the last used Device.
+            if (newDevice != currentDevice)
             {
-                switch (device.name)
+                switch (newDevice.name)
                 {
                     case "XInputControllerWindows":
-                        //Debug.Log($"Current Device is {device.name}");
-                        ChangeActiveController(DeviceKey.Device.XBOX, device);
+                        ChangeActiveController(DeviceKey.Device.XBOX, newDevice);
                         break;
 
                     case "DualShock4GamepadHID":
-                        //Debug.Log($"Current Device is {device.name}");
-                        ChangeActiveController(DeviceKey.Device.PS4, device);
+                        ChangeActiveController(DeviceKey.Device.PS4, newDevice);
                         break;
 
                     case "Keyboard":
-                        //Debug.Log($"Current Device is {device.name}");
-                        ChangeActiveController(DeviceKey.Device.PC, device);
+                        ChangeActiveController(DeviceKey.Device.PC, newDevice);
                         break;
 
                     case "Mouse":
-                        //Debug.Log($"Current Device is {device.name}");
-                        ChangeActiveController(DeviceKey.Device.PC, device);
+                        ChangeActiveController(DeviceKey.Device.PC, newDevice);
                         break;
                 }
+                //Debug.Log($"Current Device is {device.name}");
                 OnChangeDevice?.Invoke(currentController);
                 ChangeCursorStatus(currentController);
             }
@@ -77,6 +80,7 @@ public class InputHandler : Singleton<InputHandler>
         currentController = deviceKey;
         currentDevice = newDevice;
     }
+
     private void ChangeCursorStatus(DeviceKey.Device currentDevice)
     {
         Cursor.visible = currentDevice == DeviceKey.Device.PC ? true : false;
@@ -89,10 +93,5 @@ public class InputHandler : Singleton<InputHandler>
             if (key == k.key) return k.sprites[(int)device];
         }
         return null;
-    }
-
-    public void OnMousePosition(InputValue value)
-    {
-        mousePosition = value.Get<Vector2>();
     }
 }

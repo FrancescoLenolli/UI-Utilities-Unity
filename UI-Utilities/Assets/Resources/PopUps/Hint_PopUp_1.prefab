@@ -72,8 +72,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -164,9 +164,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6068864199183900373}
+  - component: {fileID: 5998388157679854647}
   - component: {fileID: 139187372502788268}
   m_Layer: 5
-  m_Name: Hint_PopUp
+  m_Name: Hint_PopUp_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,6 +194,18 @@ RectTransform:
   m_AnchoredPosition: {x: -100.00004, y: -127.999985}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &5998388157679854647
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3333935307605924477}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!114 &139187372502788268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +219,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3204781218490648293}
+  type: 2
+  canvasGroup: {fileID: 0}
+  offset: {x: 0, y: 0}
 --- !u!1 &3754896087827816148
 GameObject:
   m_ObjectHideFlags: 0
