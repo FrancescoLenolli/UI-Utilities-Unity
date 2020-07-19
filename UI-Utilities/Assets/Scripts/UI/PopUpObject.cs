@@ -18,6 +18,8 @@ public class PopUpObject : MonoBehaviour
     private InputHandler inputHandler;
     private RectTransform rectTransform;
     private Vector2 offsetToMousePosition;
+    private Vector2 lastMousePosition;
+    private bool mouseMoved = false;
 
     private void Awake()
     {
@@ -27,12 +29,20 @@ public class PopUpObject : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
 
         offsetToMousePosition = new Vector2(rectTransform.rect.width * 0.5f, rectTransform.rect.height * 0.5f);
+        lastMousePosition = inputHandler.mousePosition;
 
         StartingBehaviour();
     }
 
     private void LateUpdate()
     {
+        if (lastMousePosition != inputHandler.mousePosition)
+        {
+            mouseMoved = true;
+            //lastMousePosition = inputHandler.mousePosition;
+        }
+        else mouseMoved = false;
+
         Vector3 newPosition = new Vector3(inputHandler.mousePosition.x + offsetToMousePosition.x, inputHandler.mousePosition.y + offsetToMousePosition.y, 0);
         transform.position = newPosition;
     }
@@ -54,7 +64,12 @@ public class PopUpObject : MonoBehaviour
         yield return new WaitForSeconds(1f);
         while (true)
         {
-            canvasGroup.alpha += Time.deltaTime * fadeTime;
+            if (!mouseMoved)
+            {
+                canvasGroup.alpha += Time.deltaTime * fadeTime;
+                yield return null;
+            }
+            else canvasGroup.alpha = 0;
             yield return null;
         }
     }
